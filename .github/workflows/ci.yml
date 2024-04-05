@@ -3,41 +3,26 @@ name: Call APIs
 on:
   push:
     branches:
-      - main
-  schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight UTC
-  pull_request:
-    branches:
-      - main
+      - dev
+      - prod
 
 jobs:
-  call-api-1:
+  call-api-dev:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/dev'
 
     steps:
-      - name: Call API 1
+      - name: Call API for Dev
         run: |
-          response=$(curl -s -X GET https://api.example.com/data1)
-          echo "Response from API 1: $response"
+          response=$(curl -s -X GET https://flow.sokt.io/func/scriESGNpMOS)
+          echo "Response from Dev API: $response"
 
-  call-api-2:
+  call-api-prod:
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
+    if: github.ref == 'refs/heads/prod'
 
     steps:
-      - name: Call API 2
+      - name: Call API for Prod
         run: |
-          response=$(curl -s -X GET https://api.example.com/data2)
-          echo "Response from API 2: $response"
-
-  call-api-3:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    steps:
-      - name: Call API 3
-        run: |
-          response=$(curl -s -X GET https://api.example.com/data3)
-          echo "Response from API 3: $response"
-
+          response=$(curl -s -X GET https://httpbin.org/get)
+          echo "Response from Prod API: $response"
