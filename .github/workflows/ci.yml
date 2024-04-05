@@ -3,16 +3,16 @@ name: Call APIs
 on:
   push:
     branches:
-      - dev
+      - main
       - prod
 
 jobs:
-  call-api-dev:
+  call-api-main:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Call API for Dev
+      - name: Call API for main
         run: |
           response=$(curl -s -X GET https://flow.sokt.io/func/scriESGNpMOS)
           echo "Response from Dev API: $response"
