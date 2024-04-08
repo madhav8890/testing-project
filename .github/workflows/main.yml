@@ -16,7 +16,6 @@ jobs:
     steps:
       - name: Deployment on testing Branch
         run: |
-          # response=$(curl -s -X GET https://flow.sokt.io/func/scriyxIVTzG3?env=DEV&key=FE)
           response=$(curl -s -X GET https://httpbin.org/get)
           echo "$response"
 
@@ -27,6 +26,5 @@ jobs:
     steps:
       - name: Deployment on master Branch
         run: |
-          # response=$(curl -s -X GET https://flow.sokt.io/func/scriyxIVTzG3?env=PROD&key=FE)
           response=$(curl -s -X GET https://flow.sokt.io/func/scriESGNpMOS?key)
           echo "$response"
