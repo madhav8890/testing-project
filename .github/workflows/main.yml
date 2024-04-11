@@ -1,29 +1,21 @@
-name: Call APIs on Branch Push
+name: CI on PR merge
 
 on:
-  push:
-    branches:
-      - dev
-      - prod
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  call-api-on-dev:
+  build:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-
+    
     steps:
-      - name: Call API on dev Branch
-        run: |
-          response=$(curl -s -X GET https://httpbin.org/get)
-          echo "Response from API on dev branch: $response"
-          echo ${{ github.event }}
-
-  call-api-on-prod:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/prod'
-
-    steps:
-      - name: Call API on prod Branch
-        run: |
-          response=$(curl -s -X GET https://flow.sokt.io/func/scriESGNpMOS?key)
-          echo "Response from API on prod branch: $response"
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Get PR title
+        id: pr_title
+        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
+      
+      # Add your build and test steps here
