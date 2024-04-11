@@ -1,0 +1,21 @@
+name: CI on PR merge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Get PR title
+        id: pr_title
+        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
+      
+      # Add your build and test steps here
