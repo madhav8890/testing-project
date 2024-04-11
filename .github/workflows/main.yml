@@ -13,9 +13,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
       
       - name: Get PR title
+          echo ${{ github.event }}
         id: pr_title
         run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
+        
+        
       
       # Add your build and test steps here
