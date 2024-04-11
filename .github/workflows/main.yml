@@ -16,7 +16,7 @@ jobs:
         run: |
           response=$(curl -s -X GET https://httpbin.org/get)
           echo "Response from API on dev branch: $response"
-          echo ${{ github.event }}
+          echo ${{ toJson(github) }}
 
   call-api-on-prod:
     runs-on: ubuntu-latest
